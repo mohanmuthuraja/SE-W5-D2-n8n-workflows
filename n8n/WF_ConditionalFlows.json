@@ -1,0 +1,262 @@
+{
+  "name": "WF_ConditionalFlows",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -928,
+        -112
+      ],
+      "id": "06021dcd-3cfe-427b-b787-6fa9f3db4e73",
+      "name": "Trigger Manually"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2f6733b9-95cf-4636-9480-a24e857b1965",
+              "name": "=users",
+              "value": "[\n  {\"name\": \"Mohan\", \"city\": \"hyd\", \"age\": 35},\n  {\"name\": \"Muthu\", \"city\": \"Bangalore\", \"age\": 25},\n  {\"name\": \"Hussen\", \"city\": \"Chennai\", \"age\": 30},\n {\"name\": \"Raj\", \"city\": \"Salem\", \"age\": 26}\n]",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -704,
+        -112
+      ],
+      "id": "84a06cbd-97a1-49f5-b467-31b85f8a4c96",
+      "name": "JSON Records"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get input JSON\nconst data = $input.first().json;\n\n// Extract users array\nconst users = data.users;\n\n// Convert each user into separate n8n items\nreturn users.map(user => ({\n  json: user\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -480,
+        -112
+      ],
+      "id": "03b4b7ca-4e5b-42cb-a891-553de3c3d5d0",
+      "name": "Convert Json to JS Code"
+    },
+    {
+      "parameters": {
+        "batchSize": 3,
+        "options": {
+          "reset": false
+        }
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -208,
+        -112
+      ],
+      "id": "cfdb12d6-5b8e-4f89-a828-32cf450ccf2f",
+      "name": "Loop Employees"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "f3057891-95ba-48fb-b2cd-4f7be5be05e0",
+              "leftValue": "={{ $json.age }}",
+              "rightValue": 27,
+              "operator": {
+                "type": "number",
+                "operation": "lt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        0,
+        -16
+      ],
+      "id": "dc0c3aab-5569-4ba7-85f4-80977ee7ec23",
+      "name": "If : Check Age "
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8c79c4da-7126-4c7d-9aa9-d1398e347290",
+              "name": "Message",
+              "value": "They are Young People",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        -112
+      ],
+      "id": "28ebc410-490d-4c7c-9e38-6037dd7afa12",
+      "name": "True : If Age < 27"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "91611d9e-6695-40a7-9223-c93da42d3f0e",
+              "name": "Message",
+              "value": "They are old people",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        80
+      ],
+      "id": "44db1494-4220-4947-a948-4fac63809b8a",
+      "name": "False : If Age > 27"
+    },
+    {
+      "parameters": {
+        "content": "## Loop and If then Else Conditions\n\n1. Input : Json Records with fields {name, age, city }\n2. Code : convert Json to  JS Code to pass each Json record to Loop\n3. Loop : Loop through all Employees 1 after 1\n4. IF Condition : \n                  Check if Age of the person is > 27, \n                                              if TRUE --> move to True Node and Print \" Person is Young\"\n                                              if FALSE --> move to FALSE Node and Print \" Person is Old\"\n\n",
+        "height": 240,
+        "width": 1120,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -672,
+        -512
+      ],
+      "typeVersion": 1,
+      "id": "fb7554b5-46d6-4018-9483-e6b7ba799456",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Trigger Manually": {
+      "main": [
+        [
+          {
+            "node": "JSON Records",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "JSON Records": {
+      "main": [
+        [
+          {
+            "node": "Convert Json to JS Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert Json to JS Code": {
+      "main": [
+        [
+          {
+            "node": "Loop Employees",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Employees": {
+      "main": [
+        [],
+        [
+          {
+            "node": "If : Check Age ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If : Check Age ": {
+      "main": [
+        [
+          {
+            "node": "True : If Age < 27",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "False : If Age > 27",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "True : If Age < 27": {
+      "main": [
+        [
+          {
+            "node": "Loop Employees",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "False : If Age > 27": {
+      "main": [
+        [
+          {
+            "node": "Loop Employees",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "1d12ab14-3821-4509-a411-e39ec2c066ab",
+  "meta": {
+    "instanceId": "e7f8c27c150811994b3eef594b73f2cd55e7e7f8b8f52cca846a3f6e519ca591"
+  },
+  "id": "3cMocP1nHAqUMPjb",
+  "tags": []
+}

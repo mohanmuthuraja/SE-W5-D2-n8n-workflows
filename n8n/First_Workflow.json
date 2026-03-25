@@ -1,0 +1,122 @@
+{
+  "name": "First_Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "daysInterval": 25
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -448,
+        -32
+      ],
+      "id": "0711c784-74dc-470f-abf1-35279f9a26d3",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cc53cf96-1a0e-40a0-a14a-a325e22fb0de",
+              "name": "Name",
+              "value": "Mohan",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -224,
+        -32
+      ],
+      "id": "fe7b8489-bf2f-4327-8438-82345532addb",
+      "name": "Constant Field"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f4d38fac-1335-4cec-97f0-f881428cb8fb",
+              "name": "Greetings",
+              "value": "=Hello {{ $json.Name }}, Welcome to Social Eagle",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        0,
+        -32
+      ],
+      "id": "e6061137-1030-4d63-bab6-b08a795cdcfa",
+      "name": "Greetings"
+    },
+    {
+      "parameters": {
+        "content": "This ** n8n Workflow ** just prints the Greetings along with the Input name given in \"Constant Field\" node. \n\nEx: \n1. Schedule Trigger : Scheduled for Daily once ( automatic execution - periodic ) \n2. Constant Field Node - has Field \"Name\" constant with \"Mohan\"\n3. Greetings Node - take the input from \"Constant Field\" Node and prints the message as \"Hi {{Name}}, Welcome to Social Eagle \"\n\n**Note : All Executions can be seen at the Execution tab.\n",
+        "height": 176,
+        "width": 976,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -624,
+        -288
+      ],
+      "typeVersion": 1,
+      "id": "065d69e1-a613-454d-84f7-71c00f9771a8",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Constant Field",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Constant Field": {
+      "main": [
+        [
+          {
+            "node": "Greetings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "6117009a-91ac-4475-a1fb-54ac5c9bca57",
+  "meta": {
+    "instanceId": "e7f8c27c150811994b3eef594b73f2cd55e7e7f8b8f52cca846a3f6e519ca591"
+  },
+  "id": "5sDC1wQPLsDJbAkG",
+  "tags": []
+}
