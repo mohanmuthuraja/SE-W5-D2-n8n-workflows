@@ -1,0 +1,334 @@
+{
+  "name": "Convert_Extract_JSON_to_Files",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -928,
+        -112
+      ],
+      "id": "278b762e-3e35-4a62-8bde-1514c40e5516",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "toJson",
+        "binaryPropertyName": "csv_data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        -480,
+        -496
+      ],
+      "id": "0b072c55-e392-4c17-a35e-4a2e03b2158f",
+      "name": "Convert to File",
+      "notesInFlow": true,
+      "notes": "This node converts JSON to CSV file"
+    },
+    {
+      "parameters": {
+        "operation": "fromJson",
+        "binaryPropertyName": "csv_data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        -256,
+        -496
+      ],
+      "id": "edacb2ce-ce4b-495a-8d6e-3c7113ec7104",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{ \n  \"customers\":\n  [\n  {\n    \"customer_id\": \"CUST001\",\n    \"first_name\": \"Ravi\",\n    \"last_name\": \"Kumar\",\n    \"full_name\": \"Ravi Kumar\",\n    \"email\": \"ravi.kumar@example.com\",\n    \"phone\": \"+91-9876543210\",\n    \"alternate_phone\": \"+91-9123456789\",\n    \"date_of_birth\": \"1990-05-15\",\n    \"gender\": \"Male\",\n    \"address\": {\n      \"street\": \"Madhapur\",\n      \"area\": \"Hitech City\",\n      \"city\": \"Hyderabad\",\n      \"state\": \"Telangana\",\n      \"country\": \"India\",\n      \"pincode\": \"500081\"\n    },\n    \"company\": \"ABC Pvt Ltd\",\n    \"job_title\": \"SAP Consultant\",\n    \"customer_type\": \"Business\",\n    \"registration_date\": \"2024-01-10\",\n    \"last_purchase_date\": \"2026-02-20\",\n    \"loyalty_points\": 1200,\n    \"preferred_contact\": \"Email\",\n    \"is_active\": true\n  },\n  {\n    \"customer_id\": \"CUST002\",\n    \"first_name\": \"Anita\",\n    \"last_name\": \"Sharma\",\n    \"full_name\": \"Anita Sharma\",\n    \"email\": \"anita.sharma@example.com\",\n    \"phone\": \"+91-9123456780\",\n    \"alternate_phone\": \"+91-9988776655\",\n    \"date_of_birth\": \"1992-08-25\",\n    \"gender\": \"Female\",\n    \"address\": {\n      \"street\": \"Indiranagar\",\n      \"area\": \"Stage 2\",\n      \"city\": \"Bangalore\",\n      \"state\": \"Karnataka\",\n      \"country\": \"India\",\n      \"pincode\": \"560038\"\n    },\n    \"company\": \"XYZ Solutions\",\n    \"job_title\": \"Data Analyst\",\n    \"customer_type\": \"Individual\",\n    \"registration_date\": \"2023-11-05\",\n    \"last_purchase_date\": \"2026-01-15\",\n    \"loyalty_points\": 850,\n    \"preferred_contact\": \"Phone\",\n    \"is_active\": true\n  },\n  {\n    \"customer_id\": \"CUST003\",\n    \"first_name\": \"Vikram\",\n    \"last_name\": \"Singh\",\n    \"full_name\": \"Vikram Singh\",\n    \"email\": \"vikram.singh@example.com\",\n    \"phone\": \"+91-9988776655\",\n    \"alternate_phone\": \"+91-9012345678\",\n    \"date_of_birth\": \"1988-12-10\",\n    \"gender\": \"Male\",\n    \"address\": {\n      \"street\": \"Andheri East\",\n      \"area\": \"MIDC\",\n      \"city\": \"Mumbai\",\n      \"state\": \"Maharashtra\",\n      \"country\": \"India\",\n      \"pincode\": \"400093\"\n    },\n    \"company\": \"TechCorp\",\n    \"job_title\": \"Project Manager\",\n    \"customer_type\": \"Business\",\n    \"registration_date\": \"2022-07-18\",\n    \"last_purchase_date\": \"2026-03-01\",\n    \"loyalty_points\": 1500,\n    \"preferred_contact\": \"Email\",\n    \"is_active\": false\n  }\n]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -704,
+        -112
+      ],
+      "id": "ee5488be-bbac-4a45-9853-6223c598e608",
+      "name": "JSON Input( Customer Details )"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        -480,
+        -304
+      ],
+      "id": "b7e8aa26-a884-4b5c-af68-26f0c34d933f",
+      "name": "Convert to File1"
+    },
+    {
+      "parameters": {
+        "operation": "html",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        -480,
+        272
+      ],
+      "id": "db8d7ce2-96a5-44ac-9e43-d89364ef527b",
+      "name": "Convert to File2"
+    },
+    {
+      "parameters": {
+        "operation": "xlsx",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        -240,
+        96
+      ],
+      "id": "28ac181d-074c-4d64-8b68-df4302ba1a25",
+      "name": "Convert to File4"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        -256,
+        -304
+      ],
+      "id": "b9faab3f-25cf-421e-8e97-90b4ff10b4e7",
+      "name": "Extract from File1"
+    },
+    {
+      "parameters": {
+        "operation": "toText",
+        "sourceProperty": "customers",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        -480,
+        -112
+      ],
+      "id": "e13e1300-c2c7-4e82-8e65-3e32b7df3d0b",
+      "name": "Convert to File5"
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        -256,
+        -112
+      ],
+      "id": "3a0bec6e-4922-43a6-8b3a-5f9dbfe9a9e4",
+      "name": "Extract from File2"
+    },
+    {
+      "parameters": {
+        "operation": "xlsx",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        -16,
+        96
+      ],
+      "id": "51f49393-944d-4a37-afce-ef6cb8ac12e4",
+      "name": "Extract from File3"
+    },
+    {
+      "parameters": {
+        "operation": "html",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        -256,
+        272
+      ],
+      "id": "5cd2c37a-1c19-47d0-9d0f-ee6b45768764",
+      "name": "Extract from File4"
+    },
+    {
+      "parameters": {
+        "jsCode": "return $json.customers.map(c => ({ json: c }));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -480,
+        96
+      ],
+      "id": "dc90652c-1a5b-47bb-b7cf-55123542c9bc",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "content": "## This Flow is to convert JSON to JSON, EXCEL, TEXT FILE, HTML Files\n\nManual Trigger --> Sample JSON File ( Customer Details ) --> Convert JSON to EXCEL, TEXT, CSV & HTML Files --> we can download the data here if required --> Extract From Files ( TEXT, CSV, HTML, Excel )\n\nNote: since Customer Details in JSON file is wrapped in parent node as array , while converting this to Excel of Text or CSV will result in same line appending same fields in single line for ex :\n\nRow 1 --> Customer[0].CustomerID & remaining fields, Customer[1].CustomerID & remaining fields, Customer[1].CustomerID & remaining fields, \n it will result all customer details will be placed in Single link instead of multiple lines.\n\nNote: **No second row will be created**\n\nto avoid this, there is Function written under **Code** node, as below \n_**return $json.customers.map(c => ({ json: c }));**_\nwhich will convert every array value as seperate lines and will result good in excel. \nEx:\nRow 1 --> Customer[0].CustomerID\nRow 2 --> Customer[0].CustomerID\nRow 3 --> Customer[0].CustomerID\n\n",
+        "height": 512,
+        "width": 784
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1312,
+        -592
+      ],
+      "typeVersion": 1,
+      "id": "825314d2-75ec-4dbe-8765-35b448c346ef",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "JSON Input( Customer Details )",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "JSON Input( Customer Details )": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Convert to File1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Convert to File2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Convert to File5",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File1": {
+      "main": [
+        [
+          {
+            "node": "Extract from File1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File2": {
+      "main": [
+        []
+      ]
+    },
+    "Extract from File3": {
+      "main": [
+        []
+      ]
+    },
+    "Convert to File5": {
+      "main": [
+        [
+          {
+            "node": "Extract from File2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File4": {
+      "main": [
+        [
+          {
+            "node": "Extract from File3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File2": {
+      "main": [
+        [
+          {
+            "node": "Extract from File4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Convert to File4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "c8b3dfa7-b80c-4390-8581-8a660f74a438",
+  "meta": {
+    "instanceId": "e7f8c27c150811994b3eef594b73f2cd55e7e7f8b8f52cca846a3f6e519ca591"
+  },
+  "id": "2TbocpGokbpuOsUB",
+  "tags": []
+}

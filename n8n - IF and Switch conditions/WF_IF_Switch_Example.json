@@ -1,0 +1,219 @@
+{
+  "name": "WF_IF_Switch_Example",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -528,
+        -16
+      ],
+      "id": "d161115c-1a91-4cae-9945-555a4c6a594e",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "83383528-24dd-470a-b4ff-3d690a7e02ec",
+              "name": "a",
+              "value": 5,
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -320,
+        -16
+      ],
+      "id": "15217a4b-715f-48e9-81e5-10f6e3b7259d",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "163565bb-e273-4d6b-92ac-4a26692890c1",
+              "leftValue": "={{ $json.a }}",
+              "rightValue": 5,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -128,
+        -176
+      ],
+      "id": "15970f2f-503e-4265-86c1-95db54b900e2",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.a }}",
+                    "rightValue": 10,
+                    "operator": {
+                      "type": "number",
+                      "operation": "lt"
+                    },
+                    "id": "83dbaa43-0324-4cf0-b437-38322106b05d"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "if input is less than 10"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "874a8bc5-94da-4bd0-8851-d659fc6746f9",
+                    "leftValue": "={{ $json.a }}",
+                    "rightValue": 5,
+                    "operator": {
+                      "type": "number",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "if input is equal to 5"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "51374f8a-528c-4275-9717-427e8947dcc4",
+                    "leftValue": "={{ $json.a }}",
+                    "rightValue": 2,
+                    "operator": {
+                      "type": "number",
+                      "operation": "gt"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "if input is greater than 2"
+            }
+          ]
+        },
+        "options": {
+          "allMatchingOutputs": true
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -128,
+        32
+      ],
+      "id": "6078652d-1f07-45f7-bd0b-021efbd730f2",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "content": "## IF Condition\n\nconditional statement checks whether input is matching the criteria or not.\n\nIF Criteria is true, then IF condition will be executed, otherwise, ELSE statement will be executed.\n\nStep 1 : Defined variable a  and defaulted 5\nStep 2 : IF A = 5, and run the IF conditional node, Since the condition is TRUE, output will go to TRUE Branch, otherwise, it will move to FALSE Branch.\n\n\n##Swtich Condition\nIt groups the list of records into different branches. \nInput : A = 5\nCondition 1: if input is less than 10\nCondition 2 : if input is equal to 5\nCondition3 : if input is greater than 2\nsince all condition matches, the node will send the record to the first matching condition and skips rest.\nIf incase you want to move the same record to all matching branches, then you can set options like \"**Send matching records to all matching outputs**\n",
+        "height": 448,
+        "width": 1216
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -896,
+        -576
+      ],
+      "typeVersion": 1,
+      "id": "0bad259f-180a-4af2-b19e-44e6c7563902",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "9e36554a-ea3c-4db5-88a7-80137d207e4b",
+  "meta": {
+    "instanceId": "e7f8c27c150811994b3eef594b73f2cd55e7e7f8b8f52cca846a3f6e519ca591"
+  },
+  "id": "14WMVA7EJc8zjvtH",
+  "tags": []
+}
