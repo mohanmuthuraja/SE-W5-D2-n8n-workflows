@@ -1,0 +1,324 @@
+{
+  "name": "WF_Telegram_AI_Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -848,
+        -160
+      ],
+      "id": "b39ee873-a4f9-4b7a-a0a9-452620847b27",
+      "name": "Telegram Trigger",
+      "webhookId": "1a88bc7f-210b-4820-92b4-7ece6b0639b4",
+      "credentials": {
+        "telegramApi": {
+          "id": "Kz2LHz9orRLVdAUo",
+          "name": "se_tgllmbot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "= Reply the user message with your Intelligence:  {{ $json.message.text }}\n",
+        "options": {
+          "systemMessage": "lou are a helpful personal assistant. able to call the tool based on user requirements\n\nSerp API : call this tool when the user requests for latest news to perform web search\n\nGmail : Call Gmail if user wants to send mails\nemail structure : Email body should be correctly formated and should look professional and just notify the user if email has been sent ( ex: Mail sent / mail delivery failed )"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -592,
+        -160
+      ],
+      "id": "5fde0e9e-397a-4251-b4b9-57e214540254",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -624,
+        16
+      ],
+      "id": "2b815d21-22ce-4304-8e84-049176ccdf83",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "5SO47d4wFXwlREOL",
+          "name": "mohanai"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.message.chat.id }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -496,
+        144
+      ],
+      "id": "b44f2fcb-9042-440f-b54f-35e902604c65",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -256,
+        -160
+      ],
+      "id": "0699c807-d41c-4cf2-805b-99fc7c134863",
+      "name": "Send a text message",
+      "webhookId": "e3c567ab-a640-4407-a7e5-ea1458e566ed",
+      "credentials": {
+        "telegramApi": {
+          "id": "Kz2LHz9orRLVdAUo",
+          "name": "se_tgllmbot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolSerpApi",
+      "typeVersion": 1,
+      "position": [
+        -304,
+        96
+      ],
+      "id": "03a4786b-e9c6-4971-8924-28588249dede",
+      "name": "SerpAPI",
+      "credentials": {
+        "serpApi": {
+          "id": "77OskaU5BdotXhw1",
+          "name": "SerpAPI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "🧠 AI Agent\n\n- Processes user message using AI\n- Uses connected tools (SerpAPI) for real-time data\n- Maintains conversation context via memory\n- Generates intelligent responses\n\n👉 Acts as the brain of the workflow",
+        "height": 304,
+        "width": 256
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1136,
+        -352
+      ],
+      "typeVersion": 1,
+      "id": "b37efbf4-f685-489f-8121-16013b021cbd",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "💬 OpenAI Chat Model\n\n- Provides LLM capability (GPT model)\n- Handles natural language understanding\n- Generates responses for the AI Agent\n\n👉 Core AI engine powering responses",
+        "height": 320
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -800,
+        128
+      ],
+      "typeVersion": 1,
+      "id": "88627389-42a3-44ae-aa27-e9b236d60faa",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "🗂 Simple Memory\n\n- Stores conversation history\n- Enables context-aware responses\n- Helps AI remember previous messages\n\n👉 Improves user experience (chat continuity)",
+        "height": 240,
+        "width": 256
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -512,
+        256
+      ],
+      "typeVersion": 1,
+      "id": "f1fe3931-a85f-4513-972b-8a5da608a8f8",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "🌐 SerpAPI Tool\n\n- Fetches real-time search results from Google\n- Used by AI Agent when external data is needed\n- Enhances responses with live information\n\n👉 Enables AI to go beyond static knowledge",
+        "height": 256,
+        "width": 272
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -208,
+        160
+      ],
+      "typeVersion": 1,
+      "id": "096705f7-fb60-4a5a-99d8-7b09599b5a09",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "📤 Send Message to Telegram\n\n- Sends AI-generated response back to user\n- Uses chat ID from Telegram Trigger\n- Final output of the workflow\n\n👉 Completes the interaction loop",
+        "height": 176,
+        "width": 368
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -112,
+        -304
+      ],
+      "typeVersion": 1,
+      "id": "dca12380-b8cb-4456-8029-260bfa0df8e1",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "🚀 ##AI Telegram Bot Workflow\n\nFlow:\nTelegram → AI Agent → Response → Telegram\n\nFeatures:\n- AI-powered responses (OpenAI)\n- Memory for conversation context\n- Real-time search (SerpAPI)\n- Fully automated chatbot\n\n👉 End-to-end intelligent Telegram assistant",
+        "height": 288,
+        "width": 992,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -960,
+        -736
+      ],
+      "typeVersion": 1,
+      "id": "eb2f4166-bf5c-488d-a9ad-b9c8bda41995",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('To', ``, 'string') }}",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        224,
+        64
+      ],
+      "id": "c8730ea8-3613-4c18-9ef3-acb05a5b9ef0",
+      "name": "Send a message in Gmail",
+      "webhookId": "8c11454e-c712-4298-905f-de67eff4e3ac",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "PlUliEZNe5wNGscm",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SerpAPI": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message in Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "3c9193fc-005d-43fe-aaca-ffae189ee2c4",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "e7f8c27c150811994b3eef594b73f2cd55e7e7f8b8f52cca846a3f6e519ca591"
+  },
+  "id": "w2UUmcQ1p6sLhNnG",
+  "tags": []
+}
